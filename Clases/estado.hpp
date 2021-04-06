@@ -2,7 +2,7 @@
 #ifndef INC_ESTADO_HPP
 #define INC_ESTADO_HPP
 /*clase que define un estado*/
-class Estado{    
+class Estado{
     private:
         /*identificador del estado*/
         int id;
@@ -13,7 +13,7 @@ class Estado{
 
     public:
         Estado(int idEdo){
-           this->id = idEdo;
+            this->id = idEdo;
             esInicial = false;
             esFinal = false;
         }
