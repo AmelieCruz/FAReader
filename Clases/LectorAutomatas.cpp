@@ -26,23 +26,22 @@ int main(){
         nombreArchivo="";
     Archivo archivo(nombreArchivo);
     Automata automata;
-    archivo>>&automata;
+    if(archivo>>&automata){
+        cout<<"El automata tiene ciclos, por favor revise la descripcion del automata"<<endl;
+        return -1;
+    }
     cout<<"el archivo con el automata completado se llama: "<<archivo.getNombreArchivoSalida()<<endl;
     bool termina = false;
     while(!termina){
         cout<<"ingresa la cadena a analizar"<<endl;
         string cadena;  
-        cin>>cadena;
-        try{
+        cin>>cadena;    
             pair<string, string> aceptacion = automata.aceptaCadena(cadena);
             if(aceptacion.first!="error"){
             bool acepto = (aceptacion.first.find('t') != string::npos||!aceptacion.first.empty());
             cout<<(acepto?"se acepto la cadena\ncon el recorrido: "
                 +aceptacion.second: "no se acepto la cadena")<<endl; 
             }
-        }catch(exception e){
-            cout<<"no se acepto la cadena"<<endl;
-        }
         
         cout<<"presione 1 para ingresar otra cadena\no cualquier tecla para terminar el programa"<<endl;
         string continua;

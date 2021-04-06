@@ -18,7 +18,12 @@ class Estado{
             esFinal = false;
         }
         /*retorna el identificador del estado*/
-        int getID(){return id;}
+        int getID() {return id;}
+        int getID() const {return id;}
+        /*asigna el valor del id*/
+        void setID(int id){
+            this->id = id;
+        }
         /*indicar si el estado es inicial*/
         void setEsInicial(bool valor){esInicial = valor;}
         /*retorna un bool indicando si el estado es inicial*/
@@ -27,9 +32,12 @@ class Estado{
         void setEsFinal(bool valor){esFinal = valor;}
         /*retorna un bool indicando si el estado es final*/
         bool getEsFinal(){return esFinal;}
-        bool operator==(Estado* estado){
+        bool operator==(const Estado* estado) const {
             return this->id == estado->id? true: false;
             
+        }
+        const bool operator<(const Estado estado) const {
+            return id < estado.id;
         }
 };
 #endif

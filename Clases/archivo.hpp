@@ -27,7 +27,7 @@ class Archivo{
             archivoAutomataCompleto.open("Completo_"+nombreArchivo);
         }
         /*operador que  lee el autómata desde el archivo txt indicado*/
-        void operator>>(Automata *automata){
+        bool operator>>(Automata *automata){
             std::string estados, simbolos, transicion, edoInit, edoFin;
             archivoAutomata>>estados>>simbolos>>edoInit>>edoFin;
             this->leerEstados(estados, automata);
@@ -38,7 +38,9 @@ class Archivo{
                 this->leerTransicion(transicion, automata);
             }
             automata->agregarEstadoError();
+            if(automata->encontrarCiclos()) return true;
             automata->imprimirAutomata(&archivoAutomataCompleto);
+            return false;
         }
         /*operador que se encarga de escribir en el archivo*/
         void operator<<(std::string linea){archivoAutomataCompleto<<linea<<std::endl; }
@@ -98,7 +100,8 @@ class Archivo{
          cada parte de la funcion de transicion con una coma*/
         void leerTransicion(std::string transicion, Automata *automata){
             std::string buffer="";
-            int edoAct, edoSig, comas = 0;
+            Estado *edoAct, *edoSig;
+            int comas = 0;
             char simbolo;
             for(int i = 0; i<transicion.size(); i++){
                 char c = transicion[i];
@@ -113,13 +116,13 @@ class Archivo{
                     switch (comas)
                     {
                     case 0:
-                        edoAct = std::stoi(buffer);
+                        edoAct = automata->operator[](std::stoi(buffer));
                         break;
                     case 1:
                         simbolo = buffer[0];
                         break;
                     case 2:
-                        edoSig = std::stoi(buffer);
+                        edoSig = automata->operator[](std::stoi(buffer));
                         break;
                     default:
                         break;
