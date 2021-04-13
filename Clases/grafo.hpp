@@ -57,6 +57,6 @@ class Grafo{
         /*metodo que retorna el grafo completo*/
         std::map<Estado*, std::vector<Transicion*>>* getGrafo(){return grafoAutomata;}
         /*operador para acceder a una posicion del grafo dado un estado*/
-        std::vector<Transicion*>* operator[] (Estado* key){return &grafoAutomata->operator[](key);}
+        std::vector<Transicion*>* operator[](Estado* key){return &grafoAutomata->operator[](key);}
 };
 #endif
